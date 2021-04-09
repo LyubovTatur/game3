@@ -163,8 +163,9 @@ public class inventory : MonoBehaviour
             currItem = CopyInventoryItem(items[currID]);
             //currItem = CopyInventoryItem(items[currID]);
             movingObject.GetComponent<Image>().sprite = data.items[currItem.id].model.GetComponent<SpriteRenderer>().sprite;
-            //Vector2 temp = new Vector2(data.items[currItem.id].model.GetComponent<RectTransform>());
-            movingObject.GetComponent<RectTransform>().sizeDelta = data.items[currItem.id].model.GetComponent<BoxCollider2D>().size * new Vector2(10, 10);
+            Vector2 temp = cam.WorldToScreenPoint(data.items[currItem.id].model.GetComponent<SpriteRenderer>().size);
+            movingObject.GetComponent<RectTransform>().sizeDelta = temp;
+            movingObject.GetComponent<RectTransform>().localScale = data.items[currItem.id].model.GetComponent<Transform>().localScale;
             //AddItem(currID, data.items[0], 0);//при перетаскивании обьекта типо заменяется плейс на ноль
             movingObject.gameObject.SetActive(true);
             //items.Remove(items[currID]);
