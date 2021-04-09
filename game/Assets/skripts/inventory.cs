@@ -39,7 +39,10 @@ public class inventory : MonoBehaviour
         {
             MoveObject();
         }
-
+        if (Input.GetMouseButtonDown(1))
+        {
+            InstnantiateGameObj();
+        }
     }
     public void InsertIntoInv(int id, Item item, int count)
     {
@@ -132,7 +135,7 @@ public class inventory : MonoBehaviour
                 SelectObject();
             });
             items.Add(ii);
-        
+            
     }
     public void RemoveFromInv(int InvIndx)
     {
@@ -158,8 +161,10 @@ public class inventory : MonoBehaviour
 
             currID = int.Parse(es.currentSelectedGameObject.name);
             currItem = CopyInventoryItem(items[currID]);
-            currItem = CopyInventoryItem(items[currID]);
-            movingObject.GetComponent<Image>().sprite = data.items[currItem.id].image;
+            //currItem = CopyInventoryItem(items[currID]);
+            movingObject.GetComponent<Image>().sprite = data.items[currItem.id].model.GetComponent<SpriteRenderer>().sprite;
+            //Vector2 temp = new Vector2(data.items[currItem.id].model.GetComponent<RectTransform>());
+            movingObject.GetComponent<RectTransform>().sizeDelta = data.items[currItem.id].model.GetComponent<BoxCollider2D>().size * new Vector2(10, 10);
             //AddItem(currID, data.items[0], 0);//при перетаскивании обьекта типо заменяется плейс на ноль
             movingObject.gameObject.SetActive(true);
             //items.Remove(items[currID]);
@@ -172,11 +177,16 @@ public class inventory : MonoBehaviour
             AddGraphicsI(currID);
             AddInventoryItem(currID, items[int.Parse(es.currentSelectedGameObject.name)]);//при перетаскивании обьекта типо заменяется плейс на ноль
             AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currItem);
-            
-            currID = -1;
 
+            currID = -1;
             movingObject.gameObject.SetActive(false);
         }
+    }
+    public void InstnantiateGameObj()
+    {
+        Instantiate(data.items[currItem.id].model, cam.ScreenToWorldPoint(Input.mousePosition)+new Vector3(0,0,1),Quaternion.identity);
+        currID = -1;
+        movingObject.gameObject.SetActive(false);
     }
     public void MoveObject()
     {
