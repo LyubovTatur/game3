@@ -15,7 +15,8 @@ public class inventory : MonoBehaviour
     public EventSystem es;
     public int currID;
     public ItemInventory currItem;
-    public RectTransform movingObject;
+    //public RectTransform movingObject;
+    public GameObject movingObject;
     public Vector3 offset;
 
     public void Start()
@@ -27,7 +28,7 @@ public class inventory : MonoBehaviour
         // х*ета рандомная :3
         for (int i = 0; i < itemCount; i++)
         {
-            AddItem(i, data.items[Random.Range(0, data.items.Count)], Random.Range(1, 99));
+            AddItem(i, data.items[Random.Range(1, data.items.Count)], Random.Range(1, 5));
         }
         UpdateInventory();
 
@@ -39,16 +40,18 @@ public class inventory : MonoBehaviour
         {
             MoveObject();
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && currID!=-1)
         {
             InstnantiateGameObj();
         }
+        //UpdateInventory();
     }
     public void InsertIntoInv(int id, Item item, int count)
     {
 
     }
 
+    //добавляет на конкретное место конкретный предмет
     public void AddItem(int id, Item item, int count)
     {
         //ItemInventory tempItem = new ItemInventory();
@@ -141,17 +144,21 @@ public class inventory : MonoBehaviour
     {
 
         items.Remove(items[InvIndx]);
+
+        //Destroy(InventoryMainObject.GetComponentsInChildren<GameObject>()[0]);       
+        Destroy(es.currentSelectedGameObject);
         // List<ItemInventory> tempItems = new List<ItemInventory>();
+
        //for (int i = 0; i < InventoryMainObject.transform.childCount; i++)
        //{
-       //   // Destroy(InventoryMainObject.transform.GetChild(i));
+       //    Destroy(InventoryMainObject.transform.GetChild(i));
        //}
 
-        //for (int i = 0; i < items.Count; i++)
-        //{
-          //  AddGraphicsI(i);
-            // UpdateInventory();
-       // }
+       //for (int i = 0; i < items.Count; i++)
+       //{
+       // AddGraphicsI(i);
+       //  UpdateInventory();
+       //}
     }   //
 
     public void SelectObject()
@@ -161,21 +168,45 @@ public class inventory : MonoBehaviour
 
             currID = int.Parse(es.currentSelectedGameObject.name);
             currItem = CopyInventoryItem(items[currID]);
+            print(es.currentSelectedGameObject.GetType());
             //currItem = CopyInventoryItem(items[currID]);
-            movingObject.GetComponent<Image>().sprite = data.items[currItem.id].model.GetComponent<SpriteRenderer>().sprite;
-            Vector2 temp = cam.WorldToScreenPoint(data.items[currItem.id].model.GetComponent<SpriteRenderer>().size);
-            movingObject.GetComponent<RectTransform>().sizeDelta = temp;
-            movingObject.GetComponent<RectTransform>().localScale = data.items[currItem.id].model.GetComponent<Transform>().localScale;
+            //movingObject.GetComponent<Image>().sprite = data.items[currItem.id].model.GetComponent<SpriteRenderer>().sprite;
+            movingObject.GetComponent<SpriteRenderer>().sprite = data.items[currItem.id].model.GetComponent<SpriteRenderer>().sprite;
+            //Vector2 temp = cam.WorldToScreenPoint(data.items[currItem.id].model.GetComponent<SpriteRenderer>().size);
+            //movingObject.GetComponent<RectTransform>().sizeDelta = temp;
+            print(data.items[currItem.id].name);
+            movingObject.GetComponent<Transform>().localScale = data.items[currItem.id].model.GetComponent<Transform>().localScale;
             //AddItem(currID, data.items[0], 0);//при перетаскивании обьекта типо заменяется плейс на ноль
             movingObject.gameObject.SetActive(true);
-            //items.Remove(items[currID]);
-            RemoveFromInv(currID);
+            if (es.currentSelectedGameObject.GetComponentInChildren<Text>().text=="")
+            {
+                print(items.Remove(items[currID]));
+                for (int i = currID; i < items.Count; i++)
+                {
+                    items[i].gameObject.name = (int.Parse(items[i].gameObject.name)-1).ToString();
+                }
+                //RemoveFromInv(currID);
+                Destroy(es.currentSelectedGameObject);
+            }
+            else
+            {
+                if (es.currentSelectedGameObject.GetComponentInChildren<Text>().text == "2")
+                {
+                    es.currentSelectedGameObject.GetComponentInChildren<Text>().text = "";
+                }
+                else
+                {
+                    es.currentSelectedGameObject.GetComponentInChildren<Text>().text = (int.Parse(es.currentSelectedGameObject.GetComponentInChildren<Text>().text)-1).ToString();
+                }
+            }
+            
+
 
 
         }
         else
         {
-            AddGraphicsI(currID);
+            //AddGraphicsI(currID);
             AddInventoryItem(currID, items[int.Parse(es.currentSelectedGameObject.name)]);//при перетаскивании обьекта типо заменяется плейс на ноль
             AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currItem);
 
@@ -195,11 +226,12 @@ public class inventory : MonoBehaviour
 
         Vector3 pos = Input.mousePosition + offset;
         pos.z = InventoryMainObject.GetComponent<RectTransform>().position.z;
-        movingObject.position = cam.ScreenToWorldPoint(pos);
+        //movingObject.transform.position = cam.ScreenToWorldPoint(pos);
+        movingObject.GetComponent<Transform>().position = cam.ScreenToWorldPoint(pos);
     }
     public void UpdateInventory()
     {
-        for (int i = 0; i < itemCount; i++)
+        for (int i = 0; i < items.Count; i++)
         {
             if (items[i].id !=0 && items[i].count>1)
             {
@@ -209,7 +241,11 @@ public class inventory : MonoBehaviour
             {
                 items[i].gameObject.GetComponentInChildren<Text>().text = "";
             }
-
+            //if (items[i].id == 0)
+            //{
+            //    //items.Remove(items[i]);
+            //    //Destroy(InventoryMainObject.GetComponentsInChildren<GameObject>()[i]);
+            //}
             items[i].gameObject.GetComponentInChildren<Image>().sprite = data.items[items[i].id].image;
         } 
 
