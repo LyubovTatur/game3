@@ -216,10 +216,40 @@ public class inventory : MonoBehaviour
     }
     public void InstnantiateGameObj()
     {
-        Instantiate(data.items[currItem.id].model, cam.ScreenToWorldPoint(Input.mousePosition)+new Vector3(0,0,1),Quaternion.identity);
+        var GameObj =(GameObject) Instantiate(data.items[currItem.id].model.gameObject.gameObject, cam.ScreenToWorldPoint(Input.mousePosition)+new Vector3(0,0,1),Quaternion.identity);
+        GameObj.name = currItem.id.ToString();
+        GameObj.GetComponent<Button>().onClick.AddListener(delegate { SelectItem(); });
+        
+        //newGameObj.name = currItem.id.ToString();
         currID = -1;
         movingObject.gameObject.SetActive(false);
     }
+
+    private void SelectItem()
+    {
+        if (currID == -1)
+        {
+            print(es.currentSelectedGameObject.name);
+            currID = int.Parse(es.currentSelectedGameObject.name);
+
+            movingObject.GetComponent<SpriteRenderer>().sprite = data.items[currID].model.GetComponent<SpriteRenderer>().sprite;
+
+            movingObject.GetComponent<Transform>().localScale = data.items[currID].model.GetComponent<Transform>().localScale;
+            movingObject.gameObject.SetActive(true);
+
+            Destroy(es.currentSelectedGameObject);
+            print(es.currentSelectedGameObject.name);
+
+
+
+        }
+        else
+        {
+            currID = -1;
+            movingObject.gameObject.SetActive(false);
+        }
+    }
+
     public void MoveObject()
     {
 
