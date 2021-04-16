@@ -28,7 +28,7 @@ public class inventory : MonoBehaviour
         // х*ета рандомная :3
         for (int i = 0; i < itemCount; i++)
         {
-            AddItem(i, data.items[Random.Range(1, data.items.Count)], Random.Range(1, 5));
+            AddItem(i, data.items[i], Random.Range(1, 5));
         }
         UpdateInventory();
 
@@ -121,7 +121,72 @@ public class inventory : MonoBehaviour
 
     public void AddGraphicsI(int i)
     {
-       
+
+        //GameObject newItem = Instantiate(gameObjectShow, InventoryMainObject.transform) as GameObject;
+        //newItem.name = i.ToString();
+        //ItemInventory ii = new ItemInventory();
+        //ii.gameObject = newItem;
+        //RectTransform rt = newItem.GetComponent<RectTransform>();
+        //rt.localPosition = new Vector3(0, 0, 0);
+        //rt.localScale = new Vector3(1, 1, 1);
+        //newItem.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
+        //Button itemButton = newItem.GetComponent<Button>();
+
+        //itemButton.onClick.AddListener(delegate
+        //{
+        //    SelectObject();
+        //});
+        //items.Add(ii);
+        int isItemExist = -1;
+        foreach (var item in items)
+        {
+            if (int.Parse(item.gameObject.name)==i)
+            {
+                isItemExist = item.id;
+            }
+        }
+        if (isItemExist != -1)
+        {
+
+            if (items[isItemExist].gameObject.GetComponentInChildren<Text>().text=="")
+            {
+                items[isItemExist].gameObject.GetComponentInChildren<Text>().text = "2";
+            }
+            else
+            {
+                items[isItemExist].gameObject.GetComponentInChildren<Text>().text = (int.Parse(items[isItemExist].gameObject.GetComponentInChildren<Text>().text)+1).ToString();
+            }
+            
+            
+            
+            //if (items[i].id == 0)
+            //{
+            //    //items.Remove(items[i]);
+            //    //Destroy(InventoryMainObject.GetComponentsInChildren<GameObject>()[i]);
+            //}
+            //items[i].gameObject.GetComponentInChildren<Image>().sprite = data.items[items[i].id].image;
+
+        }
+        else
+        {
+
+            //GameObject newItem = Instantiate(gameObjectShow, InventoryMainObject.transform) as GameObject;
+            //newItem.name = i.ToString();
+            //ItemInventory ii = new ItemInventory();
+            //ii.gameObject = newItem;
+            //RectTransform rt = newItem.GetComponent<RectTransform>();
+            //rt.localPosition = new Vector3(0, 0, 0);
+            //rt.localScale = new Vector3(1, 1, 1);
+            //newItem.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
+            //Button itemButton = newItem.GetComponent<Button>();
+
+            //itemButton.onClick.AddListener(delegate
+            //{
+            //    SelectObject();
+            //});
+            //items.Add(ii);
             GameObject newItem = Instantiate(gameObjectShow, InventoryMainObject.transform) as GameObject;
             newItem.name = i.ToString();
             ItemInventory ii = new ItemInventory();
@@ -138,7 +203,13 @@ public class inventory : MonoBehaviour
                 SelectObject();
             });
             items.Add(ii);
-            
+            AddItem(i, data.items[i],1);
+
+            UpdateInventory();
+
+        }
+        
+
     }
     public void RemoveFromInv(int InvIndx)
     {
@@ -229,7 +300,7 @@ public class inventory : MonoBehaviour
     {
         if (currID == -1)
         {
-            print(es.currentSelectedGameObject.name);
+            print($"{es.currentSelectedGameObject.name} - меня нажалиии!");
             currID = int.Parse(es.currentSelectedGameObject.name);
 
             movingObject.GetComponent<SpriteRenderer>().sprite = data.items[currID].model.GetComponent<SpriteRenderer>().sprite;
@@ -238,13 +309,13 @@ public class inventory : MonoBehaviour
             movingObject.gameObject.SetActive(true);
 
             Destroy(es.currentSelectedGameObject);
-            print(es.currentSelectedGameObject.name);
 
 
 
         }
         else
         {
+            print($"{es.currentSelectedGameObject.name} - меня нажалиии!");
             currID = -1;
             movingObject.gameObject.SetActive(false);
         }
@@ -281,7 +352,10 @@ public class inventory : MonoBehaviour
 
     }
 
-    
+    public void ItemGoingBack(int index)
+    {
+        AddGraphicsI(index);
+    }
     
 
     

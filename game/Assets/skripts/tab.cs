@@ -10,26 +10,45 @@ public class tab : MonoBehaviour
     public EventSystem es;
     // public Dictionary<string, GameObject> tabs;
     public GameObject inv_tab;
+    public GameObject cat;
     bool isOpen;
     void Start()
     {
         isOpen = inv_tab.activeSelf;
+        GetComponent<Button>().onClick.AddListener(delegate
+        {
+            OnMouseDown();
+        });
+        CheckCat();
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Button>().onClick.AddListener(delegate
-        {
-            OpenClose(); 
-        });
+        
         
     }
-    public void OpenClose()
+
+    private void OnMouseDown()
     {
 
         print("box");
         isOpen = !isOpen;
         inv_tab.SetActive(isOpen);
+        CheckCat();
+
     }
+    private void CheckCat()
+    {
+        if (isOpen)
+        {
+            cat.SetActive(false);
+        }
+        else
+        {
+            cat.SetActive(true);
+        }
+    }
+
+
 }
