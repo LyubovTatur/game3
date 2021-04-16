@@ -141,13 +141,14 @@ public class inventory : MonoBehaviour
         int isItemExist = -1;
         foreach (var item in items)
         {
-            if (int.Parse(item.gameObject.name)==i)
+            if (item.id==i)
             {
-                isItemExist = item.id;
+                isItemExist = int.Parse(item.gameObject.name);
             }
         }
         if (isItemExist != -1)
         {
+            items[currID].count++;
 
             if (items[isItemExist].gameObject.GetComponentInChildren<Text>().text=="")
             {
@@ -188,7 +189,7 @@ public class inventory : MonoBehaviour
             //});
             //items.Add(ii);
             GameObject newItem = Instantiate(gameObjectShow, InventoryMainObject.transform) as GameObject;
-            newItem.name = i.ToString();
+            newItem.name = items.Count.ToString();
             ItemInventory ii = new ItemInventory();
             ii.gameObject = newItem;
             RectTransform rt = newItem.GetComponent<RectTransform>();
@@ -203,7 +204,7 @@ public class inventory : MonoBehaviour
                 SelectObject();
             });
             items.Add(ii);
-            AddItem(i, data.items[i],1);
+            AddItem(items.Count-1, data.items[i],1);
 
             UpdateInventory();
 
@@ -214,6 +215,7 @@ public class inventory : MonoBehaviour
     public void RemoveFromInv(int InvIndx)
     {
 
+        
         items.Remove(items[InvIndx]);
 
         //Destroy(InventoryMainObject.GetComponentsInChildren<GameObject>()[0]);       
@@ -261,6 +263,8 @@ public class inventory : MonoBehaviour
             }
             else
             {
+                items[currID].count--;
+
                 if (es.currentSelectedGameObject.GetComponentInChildren<Text>().text == "2")
                 {
                     es.currentSelectedGameObject.GetComponentInChildren<Text>().text = "";
