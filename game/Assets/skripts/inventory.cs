@@ -148,19 +148,20 @@ public class inventory : MonoBehaviour
         }
         if (isItemExist != -1)
         {
-            items[currID].count++;
+            items[isItemExist].count++;
+            UpdateInventory();
 
-            if (items[isItemExist].gameObject.GetComponentInChildren<Text>().text=="")
-            {
-                items[isItemExist].gameObject.GetComponentInChildren<Text>().text = "2";
-            }
-            else
-            {
-                items[isItemExist].gameObject.GetComponentInChildren<Text>().text = (int.Parse(items[isItemExist].gameObject.GetComponentInChildren<Text>().text)+1).ToString();
-            }
-            
-            
-            
+            //if (items[isItemExist].gameObject.GetComponentInChildren<Text>().text=="")
+            //{
+            //    items[isItemExist].gameObject.GetComponentInChildren<Text>().text = "2";
+            //}
+            //else
+            //{
+            //    items[isItemExist].gameObject.GetComponentInChildren<Text>().text = (int.Parse(items[isItemExist].gameObject.GetComponentInChildren<Text>().text)+1).ToString();
+            //}
+
+
+
             //if (items[i].id == 0)
             //{
             //    //items.Remove(items[i]);
@@ -291,7 +292,7 @@ public class inventory : MonoBehaviour
     }
     public void InstnantiateGameObj()
     {
-        var GameObj =(GameObject) Instantiate(data.items[currItem.id].model.gameObject.gameObject, cam.ScreenToWorldPoint(Input.mousePosition)+new Vector3(0,0,1),Quaternion.identity);
+        var GameObj =(GameObject) Instantiate(data.items[currItem.id].model.gameObject.gameObject, cam.ScreenToWorldPoint(Input.mousePosition)+new Vector3(0,0,80),Quaternion.identity);
         GameObj.name = currItem.id.ToString();
         GameObj.GetComponent<Button>().onClick.AddListener(delegate { SelectItem(); });
         

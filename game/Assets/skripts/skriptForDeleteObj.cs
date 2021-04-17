@@ -32,4 +32,10 @@ public class skriptForDeleteObj : MonoBehaviour
         }
         
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        
+
+    }
 }
