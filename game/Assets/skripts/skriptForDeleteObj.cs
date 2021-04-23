@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class skriptForDeleteObj : MonoBehaviour
 {
@@ -34,8 +35,7 @@ public class skriptForDeleteObj : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         
-
-    }
+            }
 }
