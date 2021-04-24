@@ -882,6 +882,19 @@ MonoBehaviour:
     count: 0
   movingObject: {fileID: 337167447}
   offset: {x: 1, y: -1, z: 0}
+  savingValues:
+    coins: 600
+    diamonds: 10
+    fixedObjects:
+    - x: 0
+      y: 0
+      z: 0
+      id: 4
+    items:
+    - id: 4
+      count: 5
+    - id: 6
+      count: 3
 --- !u!1 &791388030
 GameObject:
   m_ObjectHideFlags: 0

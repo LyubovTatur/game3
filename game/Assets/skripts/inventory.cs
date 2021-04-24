@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.IO;
 
 public class inventory : MonoBehaviour
 {
@@ -18,22 +19,15 @@ public class inventory : MonoBehaviour
     //public RectTransform movingObject;
     public GameObject movingObject;
     public Vector3 offset;
+    public SavingValues savingValues;
 
     public void Start()
     {
-        if (items.Count == 0)
-        {
-            AddGraphics();
-        }
-        // х*ета рандомная :3
-        for (int i = 0; i < itemCount; i++)
-        {
-            AddItem(i, data.items[i], Random.Range(1, 5));
-        }
-        UpdateInventory();
+        
+        Load();
 
     }
-
+    
     public void Update()
     {
         if (currID!=-1)
@@ -305,11 +299,11 @@ public class inventory : MonoBehaviour
     {
         if (currID == -1)
         {
-            print($"{es.currentSelectedGameObject.name} - меня нажалиии!");
+            //print($"{es.currentSelectedGameObject.name} was pressed!!!!!!!!!!!!!!!!!!!!!");
             currID = int.Parse(es.currentSelectedGameObject.name);
 
             movingObject.GetComponent<SpriteRenderer>().sprite = data.items[currID].model.GetComponent<SpriteRenderer>().sprite;
-
+            
             movingObject.GetComponent<Transform>().localScale = data.items[currID].model.GetComponent<Transform>().localScale;
             movingObject.gameObject.SetActive(true);
 
@@ -357,9 +351,12 @@ public class inventory : MonoBehaviour
 
     }
 
-    public void ItemGoingBack(int index)
+    public void ItemGoingBack(string values)
     {
-        AddGraphicsI(index);
+        var strs = values.Split();
+        AddGraphicsI(int.Parse(strs[3]));
+        savingValues.fixedObjects.Remove(new FixedObjects(float.Parse(strs[0]), float.Parse(strs[1]), float.Parse(strs[2]), int.Parse(strs[3])));
+        Save();
     }
     
 
@@ -374,6 +371,138 @@ public class inventory : MonoBehaviour
         New.gameObject = old.gameObject;
         New.count = old.count;
         return New;
+    }
+    public void FixObj(string values)
+    {
+        var strs = values.Split();
+        if (!savingValues.fixedObjects.Contains(new FixedObjects(float.Parse(strs[0]), float.Parse(strs[1]), float.Parse(strs[2]), int.Parse(strs[3]))))
+        {
+        savingValues.fixedObjects.Add(new FixedObjects(float.Parse(strs[0]), float.Parse(strs[1]), float.Parse(strs[2]),int.Parse(strs[3])));
+        }
+        print("fixed");
+        Save();
+    }
+    public void Save()
+    {
+        //string json = JsonUtility.ToJson(myObject);
+        //myObject = JsonUtility.FromJson<MyClass>(json);
+        List<ItemIdCount> newList = new List<ItemIdCount>();
+        for (int i = 0; i < items.Count; i++)
+        {
+            newList.Add(new ItemIdCount(items[i].id,items[i].count));
+        }
+        savingValues.items = newList;
+        File.WriteAllText(Application.dataPath + "/save.gamesave", JsonUtility.ToJson(savingValues));
+        print("saved");
+
+    }
+    public void Load()
+    {
+        if (File.Exists(Application.dataPath + "/save.gamesave"))
+        {
+            string jsonText = File.ReadAllText(Application.dataPath + "/save.gamesave");
+            savingValues = JsonUtility.FromJson<SavingValues>(jsonText);
+            print($"{Application.dataPath + "/save.gamesave"} exist");
+        }
+        else
+        {
+            savingValues = new SavingValues(0, 0, new List<FixedObjects>(), new List<ItemIdCount>());
+            Save();
+        }
+
+        GameObject.Find("coinAmount").GetComponent<Text>().text = savingValues.coins.ToString();
+        GameObject.Find("diamondAmount").GetComponent<Text>().text = savingValues.diamonds.ToString();
+        foreach (var obj in savingValues.fixedObjects)
+        {
+            var GameObj = (GameObject)Instantiate(data.items[obj.id].model.gameObject.gameObject, new Vector3(obj.x,obj.y,obj.z), Quaternion.identity);
+            GameObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            GameObj.name = obj.id.ToString();
+           // GameObj.GetComponent<Button>().onClick.AddListener(delegate { SelectItem(); });
+        }
+        int indForInv=0;
+        foreach (var inv in savingValues.items)
+        {
+            //if (items.Count == 0)
+            //{
+            //    AddGraphics();
+            //}
+            // х*ета рандомная :3
+
+            GameObject newItem = Instantiate(gameObjectShow, InventoryMainObject.transform) as GameObject;
+            newItem.name = indForInv.ToString();
+            ItemInventory ii = new ItemInventory();
+            ii.gameObject = newItem;
+            RectTransform rt = newItem.GetComponent<RectTransform>();
+            rt.localPosition = new Vector3(0, 0, 0);
+            rt.localScale = new Vector3(1, 1, 1);
+            newItem.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
+            Button itemButton = newItem.GetComponent<Button>();
+
+            itemButton.onClick.AddListener(delegate
+            {
+                SelectObject();
+            });
+            items.Add(ii);
+
+
+            //for (int i = 0; i < itemCount; i++)
+            //{
+            //    AddItem(i, data.items[i], Random.Range(1, 5));
+            //}
+            //UpdateInventory();
+            
+            AddItem(indForInv, data.items[inv.id],inv.count);
+            indForInv++;
+        }
+        UpdateInventory();
+    }
+    
+}
+[System.Serializable]
+
+public struct SavingValues
+{
+    public int coins;
+    public int diamonds;
+    public List<FixedObjects> fixedObjects;
+    public List<ItemIdCount> items;
+
+    public SavingValues(int coins, int diamonds, List<FixedObjects> fixedObjects, List<ItemIdCount> items)
+    {
+        this.coins = coins;
+        this.diamonds = diamonds;
+        this.fixedObjects = fixedObjects;
+        this.items = items;
+    }
+    
+}
+[System.Serializable]
+
+public struct ItemIdCount
+{
+    public int id;
+    public int count;
+
+    public ItemIdCount(int id, int count)
+    {
+        this.id = id;
+        this.count = count;
+    }
+}
+[System.Serializable]
+
+public struct FixedObjects
+{
+    public float x,y,z;
+    public int id;
+
+    public FixedObjects(float x, float y, float z, int id)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.id = id;
     }
 }
 [System.Serializable]
