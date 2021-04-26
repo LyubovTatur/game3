@@ -963,44 +963,38 @@ MonoBehaviour:
     name: 0
     image: {fileID: 21300000, guid: 79237b40cbfbcc4419824b6316475805, type: 3}
     model: {fileID: 831083040309682706, guid: a790b3ca22403744fa456598c7be753a, type: 3}
-    price: 300
-    sellPrice: 30
+    price: 0
+    sellPrice: 0
   - id: 1
-    name: 1
-    image: {fileID: 21300000, guid: 764f3691d9e308b48a90eaf527d5dd68, type: 3}
-    model: {fileID: 2531058485462434863, guid: ff1cf70759e21be43b4df71ac7e49748, type: 3}
-    price: 300
-    sellPrice: 30
+    name: "\u041A\u043E\u0432\u0440\u0438\u043A"
+    image: {fileID: 21300000, guid: 5a4f2bc099a935d408caea4550c5168f, type: 3}
+    model: {fileID: 9033309740257618392, guid: 40c8e138c7b1a764fbba0ad01e283b03, type: 3}
+    price: 100
+    sellPrice: 15
   - id: 2
-    name: 2
-    image: {fileID: 21300000, guid: 20733f09c33606d4bbc801033ea133d8, type: 3}
-    model: {fileID: 2694592392156336530, guid: 640dbd2188ebf2d4bb3f147eb17fbb74, type: 3}
-    price: 300
-    sellPrice: 30
+    name: "\u0414\u043D\u0435\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E"
+    image: {fileID: 21300000, guid: 073eb8a635f334542ac27d2333898853, type: 3}
+    model: {fileID: 7110958543055698348, guid: db7cb53dd7c776b41a6a08dc9a33c402, type: 3}
+    price: 1300
+    sellPrice: 120
   - id: 3
-    name: 3
-    image: {fileID: 21300000, guid: 066c08391feba794a918250ffc82f6d9, type: 3}
-    model: {fileID: 6324040710052736396, guid: 2eed2ed6f83133149a9f98960579f377, type: 3}
-    price: 300
-    sellPrice: 30
+    name: "\u0412\u0435\u0447\u0435\u0440\u043D\u0435\u0435 \u043E\u043A\u043D\u043E"
+    image: {fileID: 21300000, guid: 5e6b5ff8a52e17a488267c9664b031c3, type: 3}
+    model: {fileID: 7145824303209119959, guid: 2f32694af5452c84b8093904ea01d57b, type: 3}
+    price: 1150
+    sellPrice: 115
   - id: 4
-    name: 4
-    image: {fileID: 21300000, guid: 37622318c6d74e84ca6ea2198c1e70bb, type: 3}
-    model: {fileID: 7643702758989701635, guid: 00c98ef6bc8e3a543ad5e642382ce9d8, type: 3}
-    price: 300
-    sellPrice: 30
+    name: "\u0427\u0443\u043F\u0441"
+    image: {fileID: 21300000, guid: ecc5fa113084ad64d913f99a899658ae, type: 3}
+    model: {fileID: 7570923418773939393, guid: 42287ae99b695524e8e2f1dc135d057d, type: 3}
+    price: 550
+    sellPrice: 50
   - id: 5
-    name: 5
-    image: {fileID: 21300000, guid: a0b5542a6c7f43c4097d0da69e07388d, type: 3}
-    model: {fileID: 3246849490859217016, guid: 2d7142b935fea564ebba06c1f421221d, type: 3}
-    price: 300
-    sellPrice: 30
-  - id: 6
-    name: 6
-    image: {fileID: 21300000, guid: daa35c67f2c5ca64d945e750f29479a9, type: 3}
-    model: {fileID: 247937580827418521, guid: 104ae836758521e4293fa4a286efb1c5, type: 3}
-    price: 300
-    sellPrice: 30
+    name: "\u041F\u043E\u0434\u0430\u0440\u043E\u043A"
+    image: {fileID: 21300000, guid: 676350e284e7c004eb4df8fe13889b48, type: 3}
+    model: {fileID: 8119267393540100716, guid: 5a4778ba3ca43964d92812010b6a0695, type: 3}
+    price: 2000
+    sellPrice: 20
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

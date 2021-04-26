@@ -18,26 +18,35 @@ public class skriptForDeleteObj : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        try
+        if (SceneManager.GetActiveScene().name == "HouseScene")
         {
-            if (GameObject.Find("inventory_tab").activeSelf)
+            try
             {
-                
-                Destroy(gameObject);
-                GameObject.Find("inventory_tab").SendMessageUpwards("ItemGoingBack", $"{transform.position.x} {transform.position.y} {transform.position.z} {int.Parse(name)}");
+                if (GameObject.Find("inventory_tab").activeSelf)
+                {
+
+                    Destroy(gameObject);
+                    GameObject.Find("inventory_tab").SendMessageUpwards("ItemGoingBack", $"{transform.position.x} {transform.position.y} {transform.position.z} {int.Parse(name)}");
+                }
+            }
+            catch (System.Exception)
+            {
+
             }
         }
-        catch (System.Exception)
+        if (SceneManager.GetActiveScene().name == "FurnitureShopScene")
         {
-
+            GameObject.Find("Main Camera").SendMessage("ClickOnItemInShop", int.Parse(name));
         }
-        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        GameObject.Find("inventory_tab").SendMessageUpwards("FixObj", $"{transform.position.x} {transform.position.y} {transform.position.z} {int.Parse(name)}");
-        print("sended");
+        if (SceneManager.GetActiveScene().name == "HouseScene")
+        {
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            GameObject.Find("inventory_tab").SendMessageUpwards("FixObj", $"{transform.position.x} {transform.position.y} {transform.position.z} {int.Parse(name)}");
+            print("sended");
+        }
     }
     [System.Serializable]
     public struct FixedObjects

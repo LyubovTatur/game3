@@ -24,6 +24,8 @@ public class inventory : MonoBehaviour
     public SavingValues savingValues;
     public GameObject sellingPanel;
     private GameObject SellingItem;
+    public GameObject BuyingPanel;
+    private Item ByingItem;
 
     public void Start()
     {
@@ -36,19 +38,73 @@ public class inventory : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().name == "FurnitureShopScene")
         {
-            var furniture = GameObject.Find("items");
-            for (int i = 0; i < furniture.transform.childCount; i++)
-            {
-                //furniture.transform.GetChild(i)..AddListener(delegate { ClickOnItemInShop(); });
-
-            }
+          BuyingPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(delegate { YesSellShop(); });
+          BuyingPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { CansellSellShop(); });
+          BuyingPanel.transform.GetChild(3).GetComponent<Slider>().onValueChanged.AddListener(delegate { ChangeAmountShop(); });
 
         }
     }
 
-    private void ClickOnItemInShop()
+    private void ChangeAmountShop()
     {
-        print("ClickOnItemInShop");
+        BuyingPanel.transform.GetChild(3).GetComponent<Slider>().transform.GetChild(0).GetComponent<Text>().text = BuyingPanel.transform.GetChild(3).GetComponent<Slider>().value.ToString();
+        
+        BuyingPanel.transform.GetChild(5).GetComponent<Text>().text = (ByingItem.price * BuyingPanel.transform.GetChild(3).GetComponent<Slider>().value).ToString();
+        
+    }
+
+    private void CansellSellShop()
+    {
+        BuyingPanel.transform.GetChild(0).GetComponent<Text>().text = "Вы уверенны, что хотите купить itemName за amount монет?";
+        BuyingPanel.transform.GetChild(3).GetComponent<Slider>().value = 1;
+        BuyingPanel.SetActive(false);
+    }
+
+    private void YesSellShop()
+    {
+        //проверка хватит ли денег
+        if (int.Parse(GameObject.Find("coinAmount").GetComponent<Text>().text) >= int.Parse(BuyingPanel.transform.GetChild(5).GetComponent<Text>().text))
+        {
+            //отнять денег
+            GameObject.Find("coinAmount").GetComponent<Text>().text = (int.Parse(GameObject.Find("coinAmount").GetComponent<Text>().text) - int.Parse(BuyingPanel.transform.GetChild(5).GetComponent<Text>().text)).ToString();
+            //добавить колво ечли уже есть в инв
+            int countt = 0;
+            for (int i = 0; i < savingValues.items.Count; i++)
+            {
+                if (savingValues.items[i].id == ByingItem.id)
+                {
+                    countt = savingValues.items[i].count;
+                    savingValues.items.Remove(savingValues.items[i]);
+                }
+            }
+           
+            savingValues.items.Add(new ItemIdCount(ByingItem.id, countt+int.Parse(BuyingPanel.transform.GetChild(3).GetComponent<Slider>().value.ToString())));
+            
+            File.WriteAllText(Application.dataPath + "/save.gamesave", JsonUtility.ToJson(savingValues));
+            print("saved");
+
+            
+            
+            //добавить новый если ещее нет
+            //закрыть
+            CansellSellShop();
+        }
+        CansellSellShop();
+        
+    }
+
+    private void ClickOnItemInShop(int id)
+    {
+        print($"ClickOnItemInShop and it is {data.items[id].name}");
+        ByingItem = data.items[id];
+
+
+
+
+        BuyingPanel.transform.GetChild(5).GetComponent<Text>().text = ByingItem.price.ToString();
+        BuyingPanel.transform.GetChild(0).GetComponent<Text>().text = BuyingPanel.transform.GetChild(0).GetComponent<Text>().text.Replace("itemName",ByingItem.name);// !!!!!!!!!!!!!!!!!!!!!!!!_!_!_!_!__!_!_!__!__!__!!!!
+        BuyingPanel.transform.GetChild(0).GetComponent<Text>().text = BuyingPanel.transform.GetChild(0).GetComponent<Text>().text.Replace("amount", ByingItem.price.ToString());// !!!!!!!!!!!!!!!!!!!!!!!!_!_!_!_!__!_!_!__!__!__!!!!
+        BuyingPanel.SetActive(true);
     }
 
     private void ChangeAmount()
@@ -57,7 +113,7 @@ public class inventory : MonoBehaviour
         if (SellingItem != null)
         {
 
-        sellingPanel.transform.GetChild(5).GetComponent<Text>().text = (data.items[int.Parse(SellingItem.transform.GetChild(0).GetComponent<Text>().text)].sellPrice * sellingPanel.transform.GetChild(3).GetComponent<Slider>().value).ToString();
+            sellingPanel.transform.GetChild(5).GetComponent<Text>().text = (data.items[items[ int.Parse(SellingItem.name)].id].sellPrice * sellingPanel.transform.GetChild(3).GetComponent<Slider>().value).ToString();
         }
 
     }
@@ -487,14 +543,18 @@ public class inventory : MonoBehaviour
     {
         //string json = JsonUtility.ToJson(myObject);
         //myObject = JsonUtility.FromJson<MyClass>(json);
-        List<ItemIdCount> newList = new List<ItemIdCount>();
+        
+            List<ItemIdCount> newList = new List<ItemIdCount>();
         for (int i = 0; i < items.Count; i++)
         {
             newList.Add(new ItemIdCount(items[i].id,items[i].count));
         }
         savingValues.coins = int.Parse(GameObject.Find("coinAmount").GetComponent<Text>().text);
         savingValues.diamonds = int.Parse(GameObject.Find("diamondAmount").GetComponent<Text>().text);
-        savingValues.items = newList;
+        if (SceneManager.GetActiveScene().name == "HouseScene")
+        {
+            savingValues.items = newList;
+        }
         File.WriteAllText(Application.dataPath + "/save.gamesave", JsonUtility.ToJson(savingValues));
         print("saved");
 
