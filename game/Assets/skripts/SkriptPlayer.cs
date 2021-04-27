@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SkriptPlayer : MonoBehaviour
 {
@@ -17,43 +18,54 @@ public class SkriptPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        if (SceneManager.GetActiveScene().name == "GameScene")
+        {
+
+        anim.SetBool("IsGameScene", true);  
+        }
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (SceneManager.GetActiveScene().name != "GameScene")
         {
-            if (camera.transform.position.x+1>0)
+
+            
+            if (Input.GetMouseButton(0))
             {
+                if (camera.transform.position.x+1>0)
+                {
 
-                
+                    
 
-                Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Flip(mouse);
-                // transform.localScale.Set(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+                    Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Flip(mouse);
+                    // transform.localScale.Set(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 
-                //transform.position = Vector2.Lerp(transform.position, Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Time.deltaTime * speed);
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(mouse.x, transform.position.y), speed * Time.deltaTime);
-                //anim.Play("walk");
-                anim.SetBool("IsWalking", true);
-                //transform.position = Vector2.MoveTowards(transform.position,mouse, speed * Time.deltaTime);
-                camera.transform.position = new Vector3(transform.position.x, camera.transform.position.y,-10);
-                    //position.x = transform.position.x;
+                    //transform.position = Vector2.Lerp(transform.position, Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Time.deltaTime * speed);
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(mouse.x, transform.position.y), speed * Time.deltaTime);
+                    //anim.Play("walk");
+                    anim.SetBool("IsWalking", true);
+                    //transform.position = Vector2.MoveTowards(transform.position,mouse, speed * Time.deltaTime);
+                    camera.transform.position = new Vector3(transform.position.x, camera.transform.position.y,-10);
+                        //position.x = transform.position.x;
+                }
+                else
+                {
+                    transform.position = new Vector2(0, transform.position.y);
+                    camera.transform.position = new Vector3(0, camera.transform.position.y, camera.transform.position.z);
+                    //anim.SetBool("IsWalking", false);
+
+                }
+
             }
             else
             {
-                transform.position = new Vector2(0, transform.position.y);
-                camera.transform.position = new Vector3(0, camera.transform.position.y, camera.transform.position.z);
-                //anim.SetBool("IsWalking", false);
-
+                anim.SetBool("IsWalking", false);
+               // anim.Play("idle");
             }
-
         }
-        else
-        {
-            anim.SetBool("IsWalking", false);
-           // anim.Play("idle");
-        }
+        
     }
 
     private void Flip(Vector2 mouse)
