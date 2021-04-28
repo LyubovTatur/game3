@@ -73,6 +73,7 @@
     <Compile Include="Assets\skripts\skriptForDeleteObj.cs" />
     <Compile Include="Assets\skripts\streetButton.cs" />
     <Compile Include="Assets\skripts\tab.cs" />
+    <Compile Include="Assets\trash\MoveIntoGame.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

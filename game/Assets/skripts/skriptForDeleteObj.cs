@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
+using System.IO;
+using UnityEngine.UI;
+using System;
 
 public class skriptForDeleteObj : MonoBehaviour
 {
@@ -14,7 +18,14 @@ public class skriptForDeleteObj : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (SceneManager.GetActiveScene().name == "HouseScene")
+        {
+            if (Input.GetMouseButtonUp(1))
+            {
+                print("up");
+                SavingFixing();
+            }
+        }
     }
     private void OnMouseDown()
     {
@@ -34,20 +45,26 @@ public class skriptForDeleteObj : MonoBehaviour
 
             }
         }
-        if (SceneManager.GetActiveScene().name == "FurnitureShopScene")
+        if (SceneManager.GetActiveScene().name == "FurnitureShopScene" || SceneManager.GetActiveScene().name == "SoapShop" || SceneManager.GetActiveScene().name == "StickerShop")
         {
             GameObject.Find("Main Camera").SendMessage("ClickOnItemInShop", int.Parse(name));
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+   
+   
+
+    private async void SavingFixing()
     {
-        if (SceneManager.GetActiveScene().name == "HouseScene")
+        await Task.Delay(TimeSpan.FromMilliseconds(1000));
+
+        if (SceneManager.GetActiveScene().name == "HouseScene" || SceneManager.GetActiveScene().name == "SoapShop" || SceneManager.GetActiveScene().name == "StickerShop")
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             GameObject.Find("inventory_tab").SendMessageUpwards("FixObj", $"{transform.position.x} {transform.position.y} {transform.position.z} {int.Parse(name)}");
             print("sended");
         }
     }
+
     [System.Serializable]
     public struct FixedObjects
     {

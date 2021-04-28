@@ -21,14 +21,18 @@ public class ForCatsCollisions : MonoBehaviour
 
     private void OnMouseDown()
     {
-            print("ouch");
+        if (GetComponent<SpriteRenderer>().sprite != bonk)
+        {
+
         GetComponent<SpriteRenderer>().sprite = bonk;
+       
+        GameObject.Find("Main Camera").SendMessage("WasBonked");
+        }
+
         
     }
-    private void OnMouseUp()
+    private void OnMouseExit()
     {
-        GameObject.Find("Main Camera").SendMessage("WasBonked");
-        GetComponent<SpriteRenderer>().sprite = cat;
 
     }
 

@@ -36,7 +36,7 @@ public class inventory : MonoBehaviour
             sellingPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { CansellSell(); });
             sellingPanel.transform.GetChild(3).GetComponent<Slider>().onValueChanged.AddListener(delegate { ChangeAmount(); });
         }
-        if (SceneManager.GetActiveScene().name == "FurnitureShopScene")
+        if (SceneManager.GetActiveScene().name == "FurnitureShopScene" || SceneManager.GetActiveScene().name == "SoapShop" || SceneManager.GetActiveScene().name == "StickerShop")
         {
           BuyingPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(delegate { YesSellShop(); });
           BuyingPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { CansellSellShop(); });
@@ -67,6 +67,7 @@ public class inventory : MonoBehaviour
         {
             //отнять денег
             GameObject.Find("coinAmount").GetComponent<Text>().text = (int.Parse(GameObject.Find("coinAmount").GetComponent<Text>().text) - int.Parse(BuyingPanel.transform.GetChild(5).GetComponent<Text>().text)).ToString();
+            savingValues.coins = int.Parse(GameObject.Find("coinAmount").GetComponent<Text>().text);
             //добавить колво ечли уже есть в инв
             int countt = 0;
             for (int i = 0; i < savingValues.items.Count; i++)
