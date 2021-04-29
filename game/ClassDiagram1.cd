@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="database">
+    <Position X="15" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Item">
+    <Position X="16.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAABAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAIAgA=</HashCode>
+      <FileName>Assets\skripts\database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ForCatsCollisions">
+    <Position X="13.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAACAAAAAAAAAAQAAAEAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\ForCatsCollisions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameScript">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAhQCAADAAAAIIBABACAggAAAAIBIAAQgQAAAAEIA=</HashCode>
+      <FileName>Assets\skripts\GameScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="homeButton">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\homeButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="inventory">
+    <Position X="20.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gASAhZAAADBBAACAVAgAEQCAgEIAgKAACExeRQAACAA=</HashCode>
+      <FileName>Assets\skripts\inventory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ItemInventory">
+    <Position X="15" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAgAAAAAAAgA=</HashCode>
+      <FileName>Assets\skripts\inventory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ItemSkripts">
+    <Position X="18.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAADAAAAAAAAAAAAAAAAAAgAAACAAcAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\ItemSkripts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveIntoShop">
+    <Position X="11.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\MoveIntoShop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="skriptForDeleteObj">
+    <Position X="10" Y="0.5" Width="3" />
+    <NestedTypes>
+      <Struct Name="skriptForDeleteObj.FixedObjects" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\skripts\skriptForDeleteObj.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAgAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\skriptForDeleteObj.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkriptPlayer">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAiAAAAAEAAAAAAEAAEAAAwAAAQgAAAAAEAA=</HashCode>
+      <FileName>Assets\skripts\SkriptPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="streetButton">
+    <Position X="16.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\streetButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tab">
+    <Position X="16.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAGAAAAAAAAAQAAAAAAAAAAAAIAAEACAAAAA=</HashCode>
+      <FileName>Assets\skripts\tab.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveIntoGame">
+    <Position X="15" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\trash\MoveIntoGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="SavingValues">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAIAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\skripts\inventory.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ItemIdCount">
+    <Position X="18.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Assets\skripts\inventory.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FixedObjects">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAQAAAgA=</HashCode>
+      <FileName>Assets\skripts\inventory.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
